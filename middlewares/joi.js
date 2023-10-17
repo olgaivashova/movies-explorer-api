@@ -2,8 +2,6 @@ const { celebrate, Joi } = require("celebrate");
 
 const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
 
-const cyrilRegex = /^[\u0400-\u04FF]+$/;
-const engRegex = /^[0-9a-zA-Z\s\u0C80-\u0CFF]+$/;
 
 module.exports.celebrateCreateUser = celebrate({
   body: Joi.object().keys({
@@ -28,17 +26,17 @@ module.exports.celebrateEditUserInfo = celebrate({
 
 module.exports.celebrateAddFilm = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().min(2).max(30),
-    director: Joi.string().min(2).max(30),
-    duration: Joi.number().min(2).max(8),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
     year: Joi.string().min(2).max(4),
-    description: Joi.string().min(2).max(30),
+    description: Joi.string().required(),
     image: Joi.string().required().regex(urlRegex),
     trailerLink: Joi.string().required().regex(urlRegex),
     thumbnail: Joi.string().required().regex(urlRegex),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().regex(cyrilRegex),
-    nameEN: Joi.string().required().regex(engRegex),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 
